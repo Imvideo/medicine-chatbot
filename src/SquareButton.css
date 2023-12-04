@@ -1,0 +1,83 @@
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 화면 전체 높이 */
+    background-color:#CEF6D8;
+    position: relative;
+    width: 100%;
+  }
+.subcenter-container {
+  display: flex;
+  justify-content: center;
+    align-items: center;
+    height: 100vh; /* 화면 전체 높이 */
+    background-color:#CEF6D8;
+    position: relative;
+    width: 400px;
+}
+.square-container {
+  position: relative;
+  z-index: 0;
+    width: 400px;
+    height: 550px;
+    background-color: white;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+    border: 2px solid black; /* 사각형 테두리를 보이도록 추가 */
+    border-radius: 15px;
+  }
+
+  .title {
+    margin-bottom: 20px; /* 글자 아래 여백 추가 */
+    position: absolute;
+    top: 8px;
+    z-index: 1;
+  }
+  
+  .reset-button {
+    position: absolute;
+    top: 4px;
+    right: 30px;
+    padding: 5px 10px;
+    font-size: 15px;
+    border: 1px solid black;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 2;
+    /* 추가적인 버튼 스타일링 */
+  }
+
+  .reset-button:active {
+    background-color: lightgrey;
+    transform: scale(0.95);
+  }
+
+  input[type="text"]{
+    position: absolute;
+    bottom: 10px;
+    width: 300px;
+    left:17px; 
+  }
+
+  .input-button {
+    position: absolute;
+    bottom:1%;
+    right: 20px;
+    padding: 3px 10px;
+    font-size: 15px;
+    border: 1px solid black;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    cursor: pointer;
+    /* 추가적인 버튼 스타일링 */
+  }
+
+  .input-button:active {
+    background-color: lightgrey;
+    transform: scale(0.95);
+  }

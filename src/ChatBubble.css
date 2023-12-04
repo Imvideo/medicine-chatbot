@@ -1,0 +1,83 @@
+:root{
+    --chat-buble-color: lightblue;
+}
+.chat-bubble {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    max-width: 70%; /* 말풍선 최대 너비 */
+    min-width: 60%;
+    position: relative;
+    align-items: flex-start;
+    background-color: var(--chat-buble-color);
+    padding: 10px;
+    padding-bottom: 0px;
+    border-radius: 20px;
+    margin-bottom: 10px; /* 말풍선 간격 조절을 위한 여백 */
+    box-sizing: border-box;
+    
+  }
+  
+  .text {
+    overflow: hidden;
+    word-wrap: break-word;
+    margin-bottom: 10px; /* 텍스트 아래 여백 */
+    z-index: 4;
+    max-width: 100%;
+  }
+  .button-container {
+    display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  
+  }
+
+  .bubble-button {
+    width: calc(33.33% - 8px); /* 3열로 정렬하기 위한 너비 설정 */
+    margin-bottom: 8px;
+    margin-right: 8px;
+    font-size: 14px;
+    border: none;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 3;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    /* 추가적인 버튼 스타일링 */
+  }
+
+  /* 꼬리 모양 만들기 */
+.bubble-tail {
+    position: relative; 
+    width: 30px;
+    height: 30px;
+    background-color: var(--chat-buble-color);
+    transform: rotate(45deg);
+    bottom: 40%; /* 말풍선 하단과 겹치지 않게 위치 조정 */
+    margin-left: -10px; /* 가운데 정렬을 위해 필요한 마진 */
+    z-index: 1;
+    
+  }
+
+  .bubble-tail-user{
+    position: relative; 
+    width: 30px;
+    height: 30px;
+    background-color: var(--chat-buble-color);
+    transform: rotate(45deg);
+    bottom: 40%; /* 말풍선 하단과 겹치지 않게 위치 조정 */
+    right:-95%;
+    margin-left: -10px; /* 가운데 정렬을 위해 필요한 마진 */
+    z-index: 0;
+    
+  }
+
+  .bubble-button:active {
+    background-color: lightgrey;
+    transform: scale(0.95);
+  }
+
+  .align-right {
+    align-self: flex-end; /* 오른쪽 정렬 */
+  }
