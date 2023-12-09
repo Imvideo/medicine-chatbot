@@ -11,27 +11,28 @@ function App() {
   const buttons = ['두통', '메스꺼움', '복통','기침','어지러움','치통','생리통'];
   const buttons1 = ['버튼 1',];
 
-  useEffect(() => {
-    // 데이터를 가져오는 함수 호출 (이 예제에서는 getBackendData라 가정)
-    getBackendData();
-  }, []);
-
-  const getBackendData = () => {
-    // 백엔드 API에서 데이터를 가져오는 비동기 함수 (fetch, axios 등 사용)
-    fetch('https://127.0.0.1:8080/askLex?question=약')
-      .then(response => response.json())
-      .then(data => {
-        // 받아온 데이터를 speechBubbles에 설정
-        setBubbleBot(data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+  const sendToBackend = async (data) => {
+    try {
+      const response = await fetch(`http://44.220.57.207:8080/askLex?question=${data}`);
+      if (response.ok) {
+        const responseData = await response.json();
+        // 백엔드로부터의 응답을 처리합니다.
+        console.log(responseData);
+      } else {
+        throw new Error('Network response was not ok.');
+      }
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   };
+
+  
 
   const handleButtonClick = (text) => {
       addNewBubbleUser(text); // 사용자 턴일 때 사용자 말풍선 추가
       addNewBubbleBot(text); // 봇 턴일 때 봇 말풍선 추가
+      const dataToSend = text; // 전달하려는 데이터를 여기에 추가
+      sendToBackend(dataToSend);
     };
   const addNewBubbleUser = (text) => {
     const newBubbleUser = {
