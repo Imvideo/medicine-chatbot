@@ -12,15 +12,15 @@ function App() {
   const [chatBubbleChat, setBubbleChat] = useState([]);
   const [dataFromSpring, setDataFromSpring] = useState('');
   const [backendResponse, setBackendResponse] = useState([]);
-  const buttons = ['두통', '메스꺼움', '복통', '기침', '어지러움', '치통'];
+  const buttons = ['두통', '소화불량', '복통', '기침', '구토', '근육통'];
   
   const requestData = {
     userMessage: 'yourUsername'
   };
   
   const sendGetRequest = (text) => {
-    fetch(`http://ec2-52-203-48-52.compute-1.amazonaws.com:8080/api/requests`, {
-      method: 'GET',
+    fetch(`http://ec2-52-203-48-52.compute-1.amazonaws.com:8080/api/requests`, { //백엔드 url
+      method: 'GET',  //GET 방식으로 요청
       headers: {
         'Content-Type': 'application/json',
       }
@@ -33,73 +33,36 @@ function App() {
       })
       .then(data => {
         console.log('Received Data:', data);
-        // const newBubbleUser = {
-        //   text: text,
-        // };
-        // setBubbleUser([...chatBubbleUser, newBubbleUser]);
-        const newBackendResponse = {
+        const newBackendResponse = {    //받은 데이터 처리
           data : data,
         };
         setBackendResponse([...backendResponse, newBackendResponse]);
         console.log('newBackendResponse 타입:', typeof newBackendResponse);
-
-
-      
-        //setBackendResponse(data);
-        // 받은 데이터 처리
       })
       .catch(error => {
         console.error('Error:', error);
-        // 에러 처리
       });
   };
 
-  // const sendToBackend = async (data) => {
-  //   requestData.userMessage = data;
-  //   fetch('http://34.204.171.30:8080/askLexV2', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json', // 데이터 형식을 JSON으로 지정
-  //       // 다른 필요한 헤더도 여기에 추가할 수 있습니다.
-  //     },
-  //     body: JSON.stringify(requestData) // 데이터를 JSON 문자열로 변환하여 body에 추가
-  //   })
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       return response.json(); // 응답 데이터를 JSON 형식으로 파싱
-  //     })
-  //     .then(data => {
-  //       console.log('Success:', data);
-  //       setTimeout(sendGetRequest(),4000); // 1초 후에 delayedAction 함수 실행
-  //       ;
-  //       // 서버 응답에 대한 처리
-  //     })
-  //     .catch(error => {
-  //       console.error('Error:', error);
-  //       // 에러 처리
-  //     });
-  //   };    
   const sendToBackend = async (data) => {
     requestData.userMessage = data;
   
     try {
-      const response = await fetch('http://ec2-52-203-48-52.compute-1.amazonaws.com:8080/askLexV2', {
-        method: 'POST',
+      const response = await fetch('http://ec2-52-203-48-52.compute-1.amazonaws.com:8080/askLexV2', { //백엔드 url
+        method: 'POST',  //POST 방식으로 요청
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestData)
+        body: JSON.stringify(requestData)   //약의 증상을 JSON 형태로 백엔드로 전송
       });
   
-      if (!response.ok) {
+      if (!response.ok) { //POST를 백엔드가 무사히 받았을 때
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
   
       const responseData = await response.json();
       console.log('Success:', responseData);
-      await sendGetRequest(); // 이 부분이 비동기적으로 처리됩니다.
+      await sendGetRequest();  //GET요청 시작
     } catch (error) {
       console.error('Error:', error);
     }
