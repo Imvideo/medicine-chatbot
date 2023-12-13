@@ -14,50 +14,35 @@ function App() {
   const [backendResponse, setBackendResponse] = useState(null);
   const buttons = ['두통', '메스꺼움', '복통', '기침', '어지러움', '치통', '생리통'];
 
-  useEffect(() => {
-    axios.get('/api/data')
-      .then(response => {
-        setDataFromSpring(response.data);
-      })
-      .catch(error => {
-        console.error('데이터를 받아오지 못했습니다.', error);
-      });
-  }, []);
-
-  const sendDataToSpring = () => {
-    const dataToSend = '리액트에서 보내는 데이터';
-    axios.post('/api/receive', dataToSend)
-      .then(response => {
-        console.log('데이터를 성공적으로 보냈습니다.', response.data);
-      })
-      .catch(error => {
-        console.error('데이터를 보내지 못했습니다.', error);
-      });
+  const requestData = {
+    userMessage: 'yourUsername'
   };
+  
 
   const sendToBackend = async (data) => {
-    try {
-      
-      const response = await fetch('http://3.233.233.47:8080/api/requests', {
+    fetch('http://34.204.171.30:8080/askLexV2', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // JSON 형태가 아니라 text/plain으로 변경
+        'Content-Type': 'application/json', // 데이터 형식을 JSON으로 지정
+        // 다른 필요한 헤더도 여기에 추가할 수 있습니다.
       },
-      body: JSON.stringify(data), // JSON.stringify를 사용하여 문자열로 변환
-    });
-      if (response.ok) {
-        const responseData = await response.json();
-        setBackendResponse(responseData);
-        addNewBubbleBot(responseData.message);
-      } else {
-        addNewBubbleBot('Network response was not ok.');
-        throw new Error('Network response was not ok.');
-      }
-    } catch (error) {
-      addNewBubbleBot(data+"입니다.");
-      console.error('There was a problem with the fetch operation:', error);
-    }
-  };
+      body: JSON.stringify(requestData) // 데이터를 JSON 문자열로 변환하여 body에 추가
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json(); // 응답 데이터를 JSON 형식으로 파싱
+      })
+      .then(data => {
+        console.log('Success:', data);
+        // 서버 응답에 대한 처리
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // 에러 처리
+      });
+    };    
 
   const handleButtonClick = (text) => {
     addNewBubbleUser(text); // 사용자쪽 말풍선
