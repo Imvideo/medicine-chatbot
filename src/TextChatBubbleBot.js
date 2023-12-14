@@ -16,7 +16,7 @@ function TextChatBubbleBot ({ text }) {
   return (
     <div className="chat-bubble">
       <div className="text">{delayedText}</div>
-      <div className="bubble-tail-user"></div>
+      <div className="bubble-tail"></div>
     </div>
   );
 };
